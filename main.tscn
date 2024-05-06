@@ -1,10 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://dhxvs11e0g0i5"]
+[gd_scene load_steps=9 format=3 uid="uid://dhxvs11e0g0i5"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_2kp38"]
 [ext_resource type="Texture2D" uid="uid://dwg8yl3cvudam" path="res://World-Tiles.png" id="1_amrjg"]
 [ext_resource type="PackedScene" uid="uid://csv2xl5c1fp6d" path="res://player.tscn" id="1_yea7w"]
 [ext_resource type="PackedScene" uid="uid://dnytvosqp4osg" path="res://platform.tscn" id="2_csvd0"]
+[ext_resource type="Texture2D" uid="uid://cv8xobrmh11ee" path="res://assets/light.png" id="3_ydhqn"]
 [ext_resource type="PackedScene" uid="uid://d4nxcju88gtrs" path="res://death_zone.tscn" id="4_bv24v"]
+[ext_resource type="Texture2D" uid="uid://bp7yd8f4uf01v" path="res://assets/powers/fly.png" id="6_mgwob"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_myi3n"]
 atlas = ExtResource("1_amrjg")
@@ -19,6 +21,10 @@ y_sort_enabled = true
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 
+[node name="PointLight2D" type="PointLight2D" parent="Player"]
+texture = ExtResource("3_ydhqn")
+texture_scale = 3.0
+
 [node name="Platform" parent="." instance=ExtResource("2_csvd0")]
 position = Vector2(-11, 159)
 
@@ -27,7 +33,9 @@ position = Vector2(259, 97)
 
 [node name="Platform3" parent="." instance=ExtResource("2_csvd0")]
 position = Vector2(513, 2)
-bounce = 800
+
+[node name="Surface" parent="Platform3" index="2"]
+bounce = 600
 
 [node name="Area2D" type="Area2D" parent="."]
 z_index = -1
@@ -44,5 +52,28 @@ texture = SubResource("AtlasTexture_myi3n")
 unique_name_in_owner = true
 position = Vector2(6, -146)
 
+[node name="Control" type="CanvasLayer" parent="."]
+
+[node name="GridContainer" type="GridContainer" parent="Control"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_bottom = -40.0
+grow_vertical = 0
+
+[node name="fly" type="TextureRect" parent="Control/GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+texture = ExtResource("6_mgwob")
+expand_mode = 2
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.333333, 0.482353, 0.894118, 1)
+
 [connection signal="area_entered" from="DeathZone" to="." method="_on_death_zone_area_entered"]
 [connection signal="area_entered" from="DeathZone" to="Player" method="_on_death_zone_area_entered"]
+
+[editable path="Platform3"]
+[editable path="Platform3/Surface"]
