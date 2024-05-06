@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://dnytvosqp4osg"]
+
+[ext_resource type="Script" path="res://platform.gd" id="1_81mcr"]
+[ext_resource type="Texture2D" uid="uid://dwg8yl3cvudam" path="res://World-Tiles.png" id="1_frmrm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gtvtl"]
+atlas = ExtResource("1_frmrm")
+region = Rect2(0, 416, 80, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yw1x1"]
+size = Vector2(253, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l25a4"]
+size = Vector2(248, 15)
+
+[node name="Platform" type="StaticBody2D"]
+position = Vector2(525, 15)
+script = ExtResource("1_81mcr")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+y_sort_enabled = true
+position = Vector2(11.5, 0.500015)
+scale = Vector2(3.4375, 3.4375)
+texture = SubResource("AtlasTexture_gtvtl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.999992, 0)
+shape = SubResource("RectangleShape2D_yw1x1")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -34.5)
+shape = SubResource("RectangleShape2D_l25a4")
